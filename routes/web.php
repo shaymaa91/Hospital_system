@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomePage\HomePageController;
+use App\Http\Controllers\Admin\FixedController;
+use App\Http\Controllers\Admin\AdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,7 +21,13 @@ Route::get('/', function () {
 });
 Route::get('Home-Page',[HomePageController::class,'index']);
 
-    Route::get('/admin-login',[HomePageController::class,'adminclick'])->name('admin.login')->middleware(['auth']);;
+    Route::get('/admin-login',[HomePageController::class,'adminclick'])->name('admin.login')->middleware(['auth']);
+    Route::prefix("admin")->group(function(){    
+        Route::get("fixed-page",[FixedController::class,'index']);
+        Route::get("dashboard",[FixedController::class,'dashboard'])->name('admin.dashboard');
+        Route::resource('Admin-doctor',AdminController::class);
+    });
+
    
         // Matches The "/admin/users" URL
     
